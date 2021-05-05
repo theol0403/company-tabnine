@@ -690,10 +690,8 @@ See documentation of `company-backends' for details."
   (cl-case command
     (interactive (company-begin-backend 'company-tabnine))
     (prefix (company-tabnine--prefix))
-    (candidates (company-tabnine--candidates arg))
-    ;; TODO: should we use async or not?
-    ;; '(:async . (lambda (callback)
-    ;;              (funcall callback (company-tabnine--candidates) arg))))
+    (candidates (cons :async (lambda (callback)
+                 (funcall callback (company-tabnine--candidates) arg))))
     (meta (company-tabnine--meta arg))
     (annotation (company-tabnine--annotation arg))
     (post-completion (company-tabnine--post-completion arg))
